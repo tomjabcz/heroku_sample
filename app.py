@@ -14,7 +14,33 @@ def create_app(test_config=None):
     @app.route('/init')
     def test_endpoint():
         create_data()
-        return "hotovo"
+        
+        actors = Actor.query.all()
+        actors_list = []
+        for actor in actors:
+            actor_data = {
+                'name': actor.name,
+                
+            }
+            actors_list.append(actor_data)
+
+        movies = Movie.query.all()
+        movies_list = []
+        for movie in movies:
+            movie_data = {
+                'name': movie.title,
+                
+            }
+            movies_list.append(movie_data)
+        
+        return jsonify({
+            'success': True,
+            'actors': actors_list,
+            'movies': movies_list
+
+        })
+        
+        
         
 
     @app.route('/movies', methods=['GET'])
