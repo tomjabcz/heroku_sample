@@ -11,7 +11,7 @@ def create_app(test_config=None):
     CORS(app)
 
     
-    @app.route('/test')
+    @app.route('/init')
     def test_endpoint():
         create_data()
         return "hotovo"
