@@ -40,9 +40,6 @@ def create_app(test_config=None):
 
         })
         
-        
-        
-
     @app.route('/movies', methods=['GET'])
     def get_movies():
         movies = Movie.query.all()
@@ -53,6 +50,32 @@ def create_app(test_config=None):
             'movies': movies_list
         })
     
+    @app.route('/movies/<int:movie_id>')
+    def get_movie(movie_id):
+        # get move by id
+        movie = Movie.query.get(movie_id)
+    
+        # check if movie exists
+        if movie is None:
+            return jsonify({
+                'success': False,
+                'message': 'Movie not found'
+            }), 404
+        
+        # data formating
+        movie_data = {
+            'title': movie.title,
+            'release_date': str(movie.release_date),
+            'actors': [actor.name for actor in movie.actors]
+        }
+
+        
+        return jsonify({
+            'success': True,
+            'movie': movie_data
+        })
+
+
     @app.route('/actors', methods=['GET'])
     def get_actors():
         actors = Actor.query.all()
@@ -63,19 +86,31 @@ def create_app(test_config=None):
             'actors': actors_list
         })
 
+    @app.route('/actors/<int:actor_id>', methods=['GET'])
+    def get_actor(actor_id):
+        # get actor by id
+        actor = Actor.query.get(actor_id)
+        
+        # check if actor exists
+        if actor is None:
+            return jsonify({
+                'success': False,
+                'message': 'Actor not found'
+            }), 404
+        
+        # data formating
+        actor_data = {
+            'name': actor.name,
+            'age': actor.age,
+            'gender': actor.gender,
+            'movies': [movie.title for movie in actor.movies]  # Získání filmů, ve kterých hrál
+        }
+       
+        return jsonify({
+            'success': True,
+            'actor': actor_data
+        })
 
-
-    @app.route('/')
-    def get_greeting():
-        excited = os.environ['EXCITED']
-        greeting = "Hello" 
-        if excited == 'true': 
-            greeting = greeting + "!!!!! You are doing great in this Udacity project."
-        return greeting
-
-    @app.route('/coolkids')
-    def be_cool():
-        return "Be cool, man, be coooool! You're almost a FSND grad!"
 
     return app
 
