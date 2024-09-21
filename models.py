@@ -29,25 +29,44 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-def create_data():
-  
-  db.drop_all()
-  db.create_all()
-  
-  actor1 = Actor(name="Tom Hanks", age=64, gender="male")
-  actor2 = Actor(name="Meryl Streep", age=71, gender="female")
+def create_data(): 
+    # Drop and recreate all tables
+    db.drop_all()
+    db.create_all()
+    
+    # create actors
+    actor1 = Actor(name="Tom Hanks", age=64, gender="male")
+    actor2 = Actor(name="Meryl Streep", age=71, gender="female")
+    actor3 = Actor(name="Leonardo DiCaprio", age=46, gender="male")
+    actor4 = Actor(name="Scarlett Johansson", age=36, gender="female")
+    actor5 = Actor(name="Brad Pitt", age=57, gender="male")
+    actor6 = Actor(name="Robert Downey Jr.", age=56, gender="male")
+    actor7 = Actor(name="Jennifer Lawrence", age=31, gender="female")
+    actor8 = Actor(name="Emma Watson", age=31, gender="female")
+    actor9 = Actor(name="Chris Hemsworth", age=38, gender="male")
+    actor10 = Actor(name="Morgan Freeman", age=84, gender="male")
 
-  # Vytvoření nového filmu
-  new_movie = Movie(title="The Post", release_date=datetime(2017, 12, 22))
+    # create movies
+    movie1 = Movie(title="The Post", release_date=datetime(2017, 12, 22))
+    movie2 = Movie(title="Inception", release_date=datetime(2010, 7, 16))
+    movie3 = Movie(title="Avengers: Endgame", release_date=datetime(2019, 4, 26))
+    movie4 = Movie(title="Titanic", release_date=datetime(1997, 12, 19))
+    movie5 = Movie(title="The Wolf of Wall Street", release_date=datetime(2013, 12, 25))
 
-  # Přidání herců k filmu
-  new_movie.actors.append(actor1)
-  new_movie.actors.append(actor2)
+    # add actors to movies
+    movie1.actors.extend([actor1, actor2])  # The Post: Tom Hanks, Meryl Streep
+    movie2.actors.append(actor3)            # Inception: Leonardo DiCaprio
+    movie3.actors.extend([actor6, actor9])  # Avengers: Robert Downey Jr., Chris Hemsworth
+    movie4.actors.append(actor3)            # Titanic: Leonardo DiCaprio
+    movie5.actors.extend([actor3, actor5])  # The Wolf of Wall Street: Leonardo DiCaprio, Brad Pitt
 
-  # Uložení změn do databáze
-  db.session.add(new_movie)
-  db.session.commit()
-  
+    # add actors who do not play in any movie
+    db.session.add_all([actor4, actor7, actor8, actor10])  # Scarlett Johansson, Jennifer Lawrence, Emma Watson, Morgan Freeman (bez filmů)
+
+    # inser everything in the database
+    db.session.add_all([movie1, movie2, movie3, movie4, movie5])
+    db.session.commit()
+
 
 # Movies vs Actors: many to many realtionship
 movie_actor = Table('movie_actor', db.Model.metadata,
