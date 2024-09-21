@@ -2,4 +2,4 @@ $Env:DATABASE_URL="postgresql://postgres:password@localhost:5432/postgres"
 $Env:EXCITED="true"
 
 
-$Env:DATABASE_URL="postgres://u5fgk8tci9kbre:p685cc7da8f6459385b5930688f2ac77263801578512ee453c2714051fc38ecd4@cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d47mt8do1nfdlq"git
+$Env:DATABASE_URL="postgres://u5fgk8tci9kbre:p685cc7da8f6459385b5930688f2ac77263801578512ee453c2714051fc38ecd4@cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d47mt8do1nfdlq"
