@@ -1,0 +1,14 @@
+udělat endpointy na delete id
+udělat endpointy na post movie / actor 
+udělat endpointy na patch movie / actor 
+přidat přístupová práva 
+přidat testy
+přidat @app.errorhandler
+dopsat dokumentaci a README
+    Document project description in README file, including the following information:
+    Motivation for the project
+    URL location for the hosted API
+    Project dependencies, local development and hosting instructions,
+    Detailed instructions for scripts to set up authentication, install any project dependencies and run the development server.
+    Documentation of API behavior and RBAC controls
+
