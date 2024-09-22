@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, abort
 from flask.json import jsonify
 from models import setup_db, create_data, Movie, Actor
 from flask_cors import CORS
@@ -93,10 +93,7 @@ def create_app(test_config=None):
         
         # check if actor exists
         if actor is None:
-            return jsonify({
-                'success': False,
-                'message': 'Actor not found'
-            }), 404
+            abort(404)
         
         # data formating
         actor_data = {
@@ -111,8 +108,46 @@ def create_app(test_config=None):
             'actor': actor_data
         })
 
+    """
+    @app.errorhandler(AuthError)
+    def handle_auth_error(ex):
+        response = jsonify({
+            "success": False,
+            "error": ex.status_code,
+            "message": ex.error['description']
+        })
+        response.status_code = ex.status_code
+        return response
+    """
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "unprocessable"
+        }), 422
+
+
+    @app.errorhandler(500)
+    def server_errror(error):
+        return jsonify({
+            "success": False,
+            "error": 500,
+            "message": "An error occurred while processing your request."
+        }), 500
+
+    @app.errorhandler(404)
+    def not_found_error(error):
+        return jsonify({
+            "success": False,
+            "error": 404,
+            "message": "Resource not found."
+        }), 404
 
     return app
+
+
+
 
 app = create_app()
 
