@@ -11,3 +11,4 @@ test patch
 curl -X PATCH 192.168.240.50:5000/movies/6 -d '{"title" : "novy_film2", "release_date" : "2024-12-25"}' -H "Content-Type: application/json"  
 
 test delete
+curl -X DELETE 192.168.240.50:5000/movies/6

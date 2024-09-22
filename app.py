@@ -115,6 +115,26 @@ def create_app(test_config=None):
             abort(500)
 
 
+    @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+    def delete_movie(movie_id):
+        try:
+            # find movie by ID
+            movie = Movie.query.get(movie_id)
+            
+            if movie is None:
+                abort(404)
+            
+            # delte movie form db
+            movie.delete()
+
+            return jsonify({
+                "success": True,
+                "deleted": movie_id
+            })
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            abort(500)
 
     @app.route('/movies/<int:movie_id>')
     def get_movie(movie_id):
