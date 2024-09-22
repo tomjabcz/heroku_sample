@@ -98,7 +98,7 @@ def create_app(test_config=None):
             if 'actors' in body:
                 actor_ids = body['actors']
                 actors = Actor.query.filter(Actor.id.in_(actor_ids)).all()
-                movie.actors = actors  # Přiřadíme nové herce k filmu
+                movie.actors = actors  
 
             
             movie.update()
@@ -168,6 +168,85 @@ def create_app(test_config=None):
             'success': True,
             'actors': actors_list
         })
+
+
+    @app.route('/actors', methods=['POST'])
+    def post_actor():
+        body = request.get_json()
+
+        try:
+            # Create a new actor instance
+            actor = Actor(
+                name=body['name'], 
+                age=body['age'], 
+                gender=body['gender']
+            )
+
+            # Save the actor to the database
+            actor.insert()
+
+            return jsonify({
+                "success": True,
+                "actor": actor.format()
+            })
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            abort(500)    
+
+    @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+    def patch_actor(actor_id):
+        body = request.get_json()
+
+        try:
+            # Find the actor by ID
+            actor = Actor.query.get(actor_id)
+            
+            if actor is None:
+                abort(404)
+
+            # Update actor's fields if provided in the request body
+            if 'name' in body:
+                actor.name = body['name']
+            if 'age' in body:
+                actor.age = body['age']
+            if 'gender' in body:
+                actor.gender = body['gender']
+
+            # Save the changes to the database
+            actor.update()
+
+            return jsonify({
+                "success": True,
+                "actor": actor.format()
+            })
+
+        except Exception as e:
+            print(f"Error: {e}")
+            abort(500)
+
+
+    @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+    def delete_actor(actor_id):
+        try:
+            # Find actor by ID
+            actor = Actor.query.get(actor_id)
+            
+            if actor is None:
+                abort(404)
+            
+            # Delete the actor from the database
+            actor.delete()
+
+            return jsonify({
+                "success": True,
+                "deleted": actor_id
+            })
+
+        except Exception as e:
+            print(f"Error: {e}")
+            abort(500)
+
 
     @app.route('/actors/<int:actor_id>', methods=['GET'])
     def get_actor(actor_id):
