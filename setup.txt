@@ -4,6 +4,19 @@ $Env:EXCITED="true"
 
 $Env:DATABASE_URL="postgres://u5fgk8tci9kbre:p685cc7da8f6459385b5930688f2ac77263801578512ee453c2714051fc38ecd4@cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d47mt8do1nfdlq"
 
+login page: <otestovat, ze kdyz se tam prihlasim, tak mi to ulozi token, ktery se potom pouziva>
+https://dev-r1xbvsu7shcbuwgw.us.auth0.com/authorize?
+audience=coffee&
+response_type=token&
+client_id=c0c2Uu3pGp4MrtgB2JZ7VRmoDwge2zd2&
+redirect_uri=http://localhost:5000
+
+dostanu v url token
+ten pak musim davat spravne do pozadavku
+
+
+
+
 test movie post
 curl -X POST 192.168.240.50:5000/movies -d '{"title" : "novy_film", "release_date" : "2024-12-24", "actors": [1,2]}' -H "Content-Type: application/json"  
 
