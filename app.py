@@ -1,5 +1,5 @@
-import os
-from flask import Flask, abort
+import os, sys
+from flask import Flask, abort, request, json
 from flask.json import jsonify
 from models import setup_db, create_data, Movie, Actor
 from flask_cors import CORS
@@ -50,6 +50,72 @@ def create_app(test_config=None):
             'movies': movies_list
         })
     
+    @app.route('/movies', methods=['POST'])
+    def post_movie():
+        body = request.get_json()
+    
+        try:
+            movie = Movie(title=body['title'], release_date=body['release_date'])
+            
+            actor_ids = body.get('actors', [])
+            actors = Actor.query.filter(Actor.id.in_(actor_ids)).all()
+        
+            #actors added to movie
+            movie.actors.extend(actors)
+            movie.insert()
+            
+            return jsonify ({
+                "success": True,
+                "movie": movie.title,
+                "actors": [actor.name for actor in movie.actors],
+                "release_date": movie.release_date 
+            })
+            
+        except Exception as e:
+            print(f"Error: {e}")
+            abort(500)
+
+    @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+    def patch_movie(movie_id):
+        body = request.get_json()
+
+        try:
+            # find movie by id
+            movie = Movie.query.get(movie_id)
+            
+            if movie is None:
+                abort(404)
+
+            # update title if present
+            if 'title' in body:
+                movie.title = body['title']
+
+            # update release date if present
+            if 'release_date' in body:
+                movie.release_date = body['release_date']
+
+            # update list of actors if present
+            if 'actors' in body:
+                actor_ids = body['actors']
+                actors = Actor.query.filter(Actor.id.in_(actor_ids)).all()
+                movie.actors = actors  # Přiřadíme nové herce k filmu
+
+            
+            movie.update()
+
+            return jsonify({
+                "success": True,
+                "movie": movie.title,
+                "actors": [actor.name for actor in movie.actors],
+                "release_date": movie.release_date
+            })
+
+        except Exception as e:
+            print(f"Error: {e}")
+            abort(500)
+
+
+
     @app.route('/movies/<int:movie_id>')
     def get_movie(movie_id):
         # get move by id
@@ -57,10 +123,7 @@ def create_app(test_config=None):
     
         # check if movie exists
         if movie is None:
-            return jsonify({
-                'success': False,
-                'message': 'Movie not found'
-            }), 404
+            abort(404)
         
         # data formating
         movie_data = {
@@ -152,4 +215,4 @@ def create_app(test_config=None):
 app = create_app()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
