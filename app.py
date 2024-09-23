@@ -76,7 +76,7 @@ def create_app(test_config=None):
     
     @app.route('/movies', methods=['POST'])
     @requires_auth('create-delete:movie')
-    def post_movie():
+    def post_movie(payload):
         body = request.get_json()
     
         try:
@@ -102,7 +102,7 @@ def create_app(test_config=None):
 
     @app.route('/movies/<int:movie_id>', methods=['PATCH'])
     @requires_auth('update:all')
-    def patch_movie(movie_id):
+    def patch_movie(payload, movie_id):
         body = request.get_json()
 
         try:
