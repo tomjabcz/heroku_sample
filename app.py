@@ -11,7 +11,7 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
-    # Endpoint to display URL, headers, and parameters - for mockup purposes - we do not have frontend
+    # Endpoint to display URL, headers, and parameters - for mockup purposes
     @app.route('/info', methods=['GET', 'POST'])
     def info():
         # Get full URL of the request
@@ -180,7 +180,6 @@ def create_app(test_config=None):
             'actors': [actor.name for actor in movie.actors]
         }
 
-        
         return jsonify({
             'success': True,
             'movie': movie_data
@@ -295,7 +294,7 @@ def create_app(test_config=None):
             'name': actor.name,
             'age': actor.age,
             'gender': actor.gender,
-            'movies': [movie.title for movie in actor.movies]  # Získání filmů, ve kterých hrál
+            'movies': [movie.title for movie in actor.movies]  # where he played
         }
        
         return jsonify({
@@ -303,17 +302,7 @@ def create_app(test_config=None):
             'actor': actor_data
         })
 
-    """
-    @app.errorhandler(AuthError)
-    def handle_auth_error(ex):
-        response = jsonify({
-            "success": False,
-            "error": ex.status_code,
-            "message": ex.error['description']
-        })
-        response.status_code = ex.status_code
-        return response
-    """
+
     @app.errorhandler(422)
     def unprocessable(error):
         return jsonify({
