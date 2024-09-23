@@ -11,6 +11,28 @@ def create_app(test_config=None):
     setup_db(app)
     CORS(app)
 
+    # Endpoint to display URL, headers, and parameters - for mockup purposes - we do not have frontend
+    @app.route('/info', methods=['GET', 'POST'])
+    def info():
+        # Get full URL of the request
+        full_url = request.url
+
+        # Get all headers from the request
+        headers = dict(request.headers)
+
+        # Get GET parameters (query string)
+        get_params = request.args.to_dict()
+
+        # Get POST parameters (form data)
+        post_params = request.form.to_dict()
+
+        # Return all gathered information as JSON
+        return jsonify({
+            'url': full_url,
+            'headers': headers,
+            'get_params': get_params,
+            'post_params': post_params
+        })
     
     @app.route('/init')
     def test_endpoint():
@@ -42,6 +64,7 @@ def create_app(test_config=None):
         })
         
     @app.route('/movies', methods=['GET'])
+    @requires_auth('read:all')
     def get_movies():
         movies = Movie.query.all()
         movies_list = [movie.format() for movie in movies]
@@ -52,6 +75,7 @@ def create_app(test_config=None):
         })
     
     @app.route('/movies', methods=['POST'])
+    @requires_auth('create-delete:movie')
     def post_movie():
         body = request.get_json()
     
@@ -77,6 +101,7 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+    @requires_auth('update:all')
     def patch_movie(movie_id):
         body = request.get_json()
 
@@ -117,6 +142,7 @@ def create_app(test_config=None):
 
 
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+    @requires_auth('create-delete:movie')
     def delete_movie(movie_id):
         try:
             # find movie by ID
@@ -138,6 +164,7 @@ def create_app(test_config=None):
             abort(500)
 
     @app.route('/movies/<int:movie_id>')
+    @requires_auth('read:all')
     def get_movie(movie_id):
         # get move by id
         movie = Movie.query.get(movie_id)
@@ -161,6 +188,7 @@ def create_app(test_config=None):
 
 
     @app.route('/actors', methods=['GET'])
+    @requires_auth('read:all')
     def get_actors():
         actors = Actor.query.all()
         actors_list = [actor.format() for actor in actors]
@@ -172,6 +200,7 @@ def create_app(test_config=None):
 
 
     @app.route('/actors', methods=['POST'])
+    @requires_auth('create-delete:actor')
     def post_actor():
         body = request.get_json()
 
@@ -196,6 +225,7 @@ def create_app(test_config=None):
             abort(500)    
 
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+    @requires_auth('update:all')
     def patch_actor(actor_id):
         body = request.get_json()
 
@@ -228,6 +258,7 @@ def create_app(test_config=None):
 
 
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+    @requires_auth('create-delete:actor')
     def delete_actor(actor_id):
         try:
             # Find actor by ID
@@ -250,6 +281,7 @@ def create_app(test_config=None):
 
 
     @app.route('/actors/<int:actor_id>', methods=['GET'])
+    @requires_auth('read:all')
     def get_actor(actor_id):
         # get actor by id
         actor = Actor.query.get(actor_id)

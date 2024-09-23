@@ -157,6 +157,7 @@ def requires_auth(permission=''):
                 return token
 
             payload = verify_decode_jwt(token)
+            
             #check_permissions(permission, payload)
             permission_check = check_permissions(permission, payload)
             

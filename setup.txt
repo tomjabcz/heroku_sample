@@ -4,16 +4,23 @@ $Env:EXCITED="true"
 
 $Env:DATABASE_URL="postgres://u5fgk8tci9kbre:p685cc7da8f6459385b5930688f2ac77263801578512ee453c2714051fc38ecd4@cb5ajfjosdpmil.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d47mt8do1nfdlq"
 
+how to get JWT token (in url in redirect - it must be https):
 login page: <otestovat, ze kdyz se tam prihlasim, tak mi to ulozi token, ktery se potom pouziva>
 https://dev-r1xbvsu7shcbuwgw.us.auth0.com/authorize?
 audience=coffee&
 response_type=token&
 client_id=c0c2Uu3pGp4MrtgB2JZ7VRmoDwge2zd2&
-redirect_uri=http://localhost:5000
+redirect_uri=http://localhost:5000/info
 
-dostanu v url token
-ten pak musim davat spravne do pozadavku
 
+test endpoint
+curl --request GET \
+  --url http://192.168.240.50:5000/movies \
+  --header 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRHOXhrMVNxU3loUndyTWJfUzVLOSJ9.eyJpc3MiOiJodHRwczovL2Rldi1yMXhidnN1N3NoY2J1d2d3LnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2NmNjZTkyZTA0OGI5MWRlMDM4OTk2NGMiLCJhdWQiOiJjb2ZmZWUiLCJpYXQiOjE3MjcxMjIxMDAsImV4cCI6MTcyNzIwODUwMCwic2NvcGUiOiIiLCJhenAiOiJjMGMyVXUzcEdwNE1ydGdCMkpaN1ZSbW9Ed2dlMnpkMiIsInBlcm1pc3Npb25zIjpbImRlbGV0ZTpkcmlua3MiLCJnZXQ6ZHJpbmtzIiwiZ2V0OmRyaW5rcy1kZXRhaWwiLCJwYXRjaDpkcmlua3MiLCJwb3N0OmRyaW5rcyJdfQ.dI0_mj1CiMn8-5eNsRWA1HHxCSb8OE6CpXhh7wk85QefCr0PxXdRyLPdOhduqetJk7k_UzrwMxvYzMO3_8wnb-rx8gWYWiN4QUyn2SbaPhIPizYOFokjHNf4YUJzqn7fQMMdkO0wVoEYkBFTXnwEX_bk3UaZdWdBsrMX4c57A1tEvK6W9-7dV70kMARNxHb7qZc9UISsQMXf1R-EcD_4dPhiYJcoRYY1Yh5W6V8iRKDgCafOBTZELn7um3uo2nwafTYMYp0-4eTQv7Z7FVpVpQI-EmMKDip-2djDJl9XL9b4J2WuIE-i5ECXGb8O9kw5szvzxWhVQgYS54bIaR_JKQ'
+
+
+to get token
+curl --request POST   --url https://dev-r1xbvsu7shcbuwgw.us.auth0.com/oauth/token   --header 'content-type: application/json'   --data '{"client_id":"NAtMzealnODOoe2oyIvxvQMpWmcXritp","client_secret":"-KGU3idUW-5uYTODT2U0ExjTIRZFRB9cq7gXSzj8d16VJAx7NmdKhpSE7kMuLI2x","audience":"coffee","grant_type":"client_credentials"}'
 
 
 
