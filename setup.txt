@@ -1,4 +1,16 @@
-todo: udělat testovaci scénáře - zatím, ať se to aspoň rozběhne s jedním a použitím jwt
+todo: udělat testovaci scénáře
+pro každý endpoint udělat pozitivní test-case 
+pak ověřit že kdo nemá práva, tak se nedostane na nějaký konkrétní (2x)
+ověřit neexistující endpoint
+a info endpoint
+
+napsat dokumentaci
+apicek
+autorizacniho modelu 
+jak nainstalovat, atp.
+jak testovat
+
+ověřit, že co má být je v os.env 
 
 res = self.client().get("/categories", headers={"Authorization": f"Bearer {self.jwt_token}"})
 
