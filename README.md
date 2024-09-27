@@ -1,7 +1,7 @@
 
 # Heroku Sample Application
 
-This is a sample Flask application deployed on Heroku, which demonstrates the use of Auth0 for authentication and API management for movies and actors. The application includes several RESTful endpoints for managing movies and actors, and implements role-based access control (RBAC) with JWT tokens for secure access to protected resources. As database postgres PaaS in heroku is used. For testing purposes, local db is used.
+This is a sample Flask application deployed on Heroku, which demonstrates the use of Auth0 for authentication/authorization and API management for movies and actors. The application includes several RESTful endpoints for managing movies and actors, and implements role-based access control (RBAC) with JWT tokens for secure access to protected resources. As database Postgres PaaS in heroku is used. For testing purposes, local db is used.
 
 ## Project Structure
 
