@@ -81,7 +81,9 @@ Authorization: Bearer <your-jwt-token>
 Valid tokens for testing purposes are stored in test-app.py
 
 
-## Endpoints 
+## Endpoints
+
+### Movie Endpoints 
 
 - **GET /movies**
   - **Description**: Fetches a list of all movies.
@@ -113,9 +115,6 @@ Valid tokens for testing purposes are stored in test-app.py
       ```
 
 - **POST /movies**
-
-### Movie Endpoints
-
   - **Description**: Creates a new movie.
   - **Permissions**: `create-delete:movie`
   - **Request Headers**:
