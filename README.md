@@ -39,7 +39,7 @@ To run this project locally, follow the steps below:
    ```
 
 5. **Set up environment variables**:
-   Create a `.env` file and set the following environment variables required for the Auth0 authentication:
+   Run setup.sh for setting-up following environment variables required for the Auth0 authentication:
    ```bash
    export AUTH0_DOMAIN='your-auth0-domain'
    export ALGORITHMS=['RS256']
@@ -62,14 +62,14 @@ The application uses Auth0 for authentication and authorization. JWT tokens are 
 
 - **Roles**:
   - **Casting Assistant**:
-    Can view actors and movies
+    - Can view actors and movies
   - **Casting Director**:
-    All permissions a Casting Assistant has and…
-    Add or delete an actor from the database
-    Modify actors or movies
+    - All permissions a Casting Assistant has and…
+    - Add or delete an actor from the database
+    - Modify actors or movies
   - **Executive Producer**:
-    All permissions a Casting Director has and…
-    Add or delete a movie from the database
+    - All permissions a Casting Director has and…
+    - Add or delete a movie from the database
 
 
 
@@ -78,6 +78,7 @@ To access a protected endpoint, include a valid JWT token in the `Authorization`
 ```bash
 Authorization: Bearer <your-jwt-token>
 ```
+Valid tokens for testing purposes are stored in test-app.py
 
 ## API Endpoints
 
