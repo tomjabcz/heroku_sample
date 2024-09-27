@@ -54,15 +54,7 @@ class MovieTestCase(unittest.TestCase):
         with self.app.app_context():
             db.session.remove()
 
-    
-
-    def test_test(self):
-        """Test info endpoint - no authorization"""
-        res = self.client().get('/info')
-        data = json.loads(res.data)
-
-        self.assertEqual(res.status_code, 200)
-    
+        
     def test_create_new_movie(self):
         """Test creating a new movie with valid JWT token"""
         res = self.client().post('/movies', json=self.new_movie,

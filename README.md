@@ -320,6 +320,6 @@ Valid tokens for testing purposes are stored in test-app.py
 To run the unit tests, use the following command:
 
 ```bash
-python -m unittest discover
+python -m unittest test-app.py
 ```
 

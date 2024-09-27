@@ -12,6 +12,7 @@ def create_app(test_config=None):
     CORS(app)
 
     # Endpoint to display URL, headers, and parameters - for mockup purposes
+    """
     @app.route('/info', methods=['GET', 'POST'])
     def info():
         # Get full URL of the request
@@ -62,7 +63,8 @@ def create_app(test_config=None):
             'movies': movies_list
 
         })
-        
+    """
+     
     @app.route('/movies', methods=['GET'])
     @requires_auth('read:all')
     def get_movies(payload):
