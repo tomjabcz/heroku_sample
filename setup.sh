@@ -1,3 +1,5 @@
 export DATABASE_URL="postgresql://postgres@localhost:5432/postgres"
-export EXCITED="true"
+export AUTH0_DOMAIN="dev-r1xbvsu7shcbuwgw.us.auth0.com"
+export ALGORITHMS="RS256"
+export API_AUDIENCE="coffee"
 echo "setup.sh script executed successfully!"

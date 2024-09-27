@@ -3,13 +3,14 @@ from flask import request, _request_ctx_stack, jsonify
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
+import os
 
 
-AUTH0_DOMAIN = 'dev-r1xbvsu7shcbuwgw.us.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'coffee'
+AUTH0_DOMAIN = os.getenv('AUTH0_DOMAIN', 'dev-r1xbvsu7shcbuwgw.us.auth0.com')
+ALGORITHMS = [os.getenv('ALGORITHMS', 'RS256')]
+API_AUDIENCE = os.getenv('API_AUDIENCE', 'coffee')
 
-## AuthError Exception
+## AuthError Exceptions
 '''
 AuthError Exception
 A standardized way to communicate auth failure modes
