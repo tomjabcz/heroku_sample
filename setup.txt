@@ -1,9 +1,4 @@
-todo: udělat testovaci scénáře
-pro každý endpoint udělat pozitivní test-case 
-pak ověřit že kdo nemá práva, tak se nedostane na nějaký konkrétní (2x)
-ověřit neexistující endpoint
-a info endpoint
-
+todo: 
 napsat dokumentaci
 apicek
 autorizacniho modelu 
