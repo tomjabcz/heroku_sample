@@ -80,83 +80,241 @@ Authorization: Bearer <your-jwt-token>
 ```
 Valid tokens for testing purposes are stored in test-app.py
 
-## API Endpoints
 
-### Movies Endpoints
+## Endpoints 
 
 - **GET /movies**
-  - Description: Fetches a list of all movies.
-  - Permissions: `read:all`
-  - Example Request:
+  - **Description**: Fetches a list of all movies.
+  - **Permissions**: `read:all`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+  - **Example Request**:
     ```bash
     curl -X GET http://localhost:5000/movies -H "Authorization: Bearer <your-jwt-token>"
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "movies": [
+          {
+            "id": 1,
+            "title": "The Post",
+            "release_date": "2017-12-22",
+            "actors": [
+              "Tom Hanks",
+              "Meryl Streep"
+            ]
+          }
+        ]
+      }
+      ```
 
 - **POST /movies**
-  - Description: Creates a new movie.
-  - Permissions: `create-delete:movie`
-  - Example Request:
+
+### Movie Endpoints
+
+  - **Description**: Creates a new movie.
+  - **Permissions**: `create-delete:movie`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+    - Content-Type: application/json
+  - **Request Body**:
+    ```json
+    {
+      "title": "New Movie",
+      "release_date": "2024-01-01",
+      "actors": [1, 2]
+    }
+    ```
+  - **Example Request**:
     ```bash
     curl -X POST http://localhost:5000/movies -H "Authorization: Bearer <your-jwt-token>" \
          -H "Content-Type: application/json" \
          -d '{"title": "New Movie", "release_date": "2024-01-01", "actors": [1, 2]}'
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "movie": "New Movie",
+        "actors": ["Tom Hanks", "Meryl Streep"],
+        "release_date": "2024-01-01"
+      }
+      ```
 
 - **PATCH /movies/<int:movie_id>**
-  - Description: Updates an existing movie.
-  - Permissions: `update:all`
-  - Example Request:
+  - **Description**: Updates an existing movie.
+  - **Permissions**: `update:all`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+    - Content-Type: application/json
+  - **Request Body**:
+    ```json
+    {
+      "title": "Updated Movie Title",
+      "release_date": "2025-01-01"
+    }
+    ```
+  - **Example Request**:
     ```bash
     curl -X PATCH http://localhost:5000/movies/1 -H "Authorization: Bearer <your-jwt-token>" \
          -H "Content-Type: application/json" \
          -d '{"title": "Updated Movie Title", "release_date": "2025-01-01"}'
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "movie": "Updated Movie Title",
+        "actors": ["Tom Hanks", "Meryl Streep"],
+        "release_date": "2025-01-01"
+      }
+      ```
 
 - **DELETE /movies/<int:movie_id>**
-  - Description: Deletes a movie by ID.
-  - Permissions: `create-delete:movie`
-  - Example Request:
+  - **Description**: Deletes a movie by ID.
+  - **Permissions**: `create-delete:movie`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+  - **Example Request**:
     ```bash
     curl -X DELETE http://localhost:5000/movies/1 -H "Authorization: Bearer <your-jwt-token>"
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "deleted": 1
+      }
+      ```
 
 ### Actors Endpoints
 
 - **GET /actors**
-  - Description: Fetches a list of all actors.
-  - Permissions: `read:all`
-  - Example Request:
+  - **Description**: Fetches a list of all actors.
+  - **Permissions**: `read:all`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+  - **Example Request**:
     ```bash
     curl -X GET http://localhost:5000/actors -H "Authorization: Bearer <your-jwt-token>"
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "actors": [
+          {
+            "id": 1,
+            "name": "Tom Hanks",
+            "age": 64,
+            "gender": "male",
+            "movies": ["The Post"]
+          }
+        ]
+      }
+      ```
 
 - **POST /actors**
-  - Description: Creates a new actor.
-  - Permissions: `create-delete:actor`
-  - Example Request:
+  - **Description**: Creates a new actor.
+  - **Permissions**: `create-delete:actor`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+    - Content-Type: application/json
+  - **Request Body**:
+    ```json
+    {
+      "name": "New Actor",
+      "age": 30,
+      "gender": "male"
+    }
+    ```
+  - **Example Request**:
     ```bash
     curl -X POST http://localhost:5000/actors -H "Authorization: Bearer <your-jwt-token>" \
          -H "Content-Type: application/json" \
          -d '{"name": "New Actor", "age": 30, "gender": "male"}'
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "actor": {
+          "id": 1,
+          "name": "New Actor",
+          "age": 30,
+          "gender": "male",
+          "movies": []
+        }
+      }
+      ```
 
 - **PATCH /actors/<int:actor_id>**
-  - Description: Updates an existing actor.
-  - Permissions: `update:all`
-  - Example Request:
+  - **Description**: Updates an existing actor.
+  - **Permissions**: `update:all`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+    - Content-Type: application/json
+  - **Request Body**:
+    ```json
+    {
+      "name": "Updated Actor Name",
+      "age": 35
+    }
+    ```
+  - **Example Request**:
     ```bash
     curl -X PATCH http://localhost:5000/actors/1 -H "Authorization: Bearer <your-jwt-token>" \
          -H "Content-Type: application/json" \
          -d '{"name": "Updated Actor Name", "age": 35}'
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "actor": {
+          "id": 1,
+          "name": "Updated Actor Name",
+          "age": 35,
+          "gender": "male",
+          "movies": ["The Post"]
+        }
+      }
+      ```
 
 - **DELETE /actors/<int:actor_id>**
-  - Description: Deletes an actor by ID.
-  - Permissions: `create-delete:actor`
-  - Example Request:
+  - **Description**: Deletes an actor by ID.
+  - **Permissions**: `create-delete:actor`
+  - **Request Headers**:
+    - Authorization: Bearer `<your-jwt-token>`
+  - **Example Request**:
     ```bash
     curl -X DELETE http://localhost:5000/actors/1 -H "Authorization: Bearer <your-jwt-token>"
     ```
+  - **Response**:
+    - Status: `200 OK`
+    - Body:
+      ```json
+      {
+        "success": true,
+        "deleted": 1
+      }
+      ```
 
 ## Running Tests
 
